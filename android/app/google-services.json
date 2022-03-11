@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "855154034836",
+    "project_id": "hookdat-mobile",
+    "storage_bucket": "hookdat-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855154034836:android:04d63929b35b433289cc81",
+        "android_client_info": {
+          "package_name": "com.hookdat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855154034836-ntb0jsrk8alc8cbr1072f5b48p2klqrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hookdat",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "855154034836-guph6c0dltn87tnpm0kbl1c7lqr36c5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwZeN0-QGfafXEhtDmlPo9ItALoxggE1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855154034836-guph6c0dltn87tnpm0kbl1c7lqr36c5b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "855154034836-c4137uji1l74e92v4o0ct5go1je2v04g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hookdat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
