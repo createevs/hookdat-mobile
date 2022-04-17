@@ -1,48 +1,48 @@
 {
   "project_info": {
-    "project_number": "855154034836",
-    "project_id": "hookdat-mobile",
-    "storage_bucket": "hookdat-mobile.appspot.com"
+    "project_number": "55899915124",
+    "project_id": "hookdat-fishing",
+    "storage_bucket": "hookdat-fishing.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:855154034836:android:04d63929b35b433289cc81",
+        "mobilesdk_app_id": "1:55899915124:android:9868d782ce2df5fc3b6221",
         "android_client_info": {
-          "package_name": "com.hookdat"
+          "package_name": "com.hookdatfishing"
         }
       },
       "oauth_client": [
         {
-          "client_id": "855154034836-ntb0jsrk8alc8cbr1072f5b48p2klqrb.apps.googleusercontent.com",
+          "client_id": "55899915124-r443i970jrc9joavid1v9ahmh78hcg7q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.hookdat",
+            "package_name": "com.hookdatfishing",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
         {
-          "client_id": "855154034836-guph6c0dltn87tnpm0kbl1c7lqr36c5b.apps.googleusercontent.com",
+          "client_id": "55899915124-897t7j7qvk0ffqtrkt1m76gcoumj297l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwZeN0-QGfafXEhtDmlPo9ItALoxggE1Y"
+          "current_key": "AIzaSyCt_Ml-Amvw_R7OYa661Jglv5NzkrtZ_C0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "855154034836-guph6c0dltn87tnpm0kbl1c7lqr36c5b.apps.googleusercontent.com",
+              "client_id": "55899915124-897t7j7qvk0ffqtrkt1m76gcoumj297l.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "855154034836-c4137uji1l74e92v4o0ct5go1je2v04g.apps.googleusercontent.com",
+              "client_id": "55899915124-ivr61nfoj0tjrhc418orcugqpsac5b3u.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hookdat"
+                "bundle_id": "com.hookdatfishing"
               }
             }
           ]

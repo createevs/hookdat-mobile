@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>855154034836-c4137uji1l74e92v4o0ct5go1je2v04g.apps.googleusercontent.com</string>
+	<string>55899915124-ivr61nfoj0tjrhc418orcugqpsac5b3u.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.855154034836-c4137uji1l74e92v4o0ct5go1je2v04g</string>
+	<string>com.googleusercontent.apps.55899915124-ivr61nfoj0tjrhc418orcugqpsac5b3u</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>855154034836-ntb0jsrk8alc8cbr1072f5b48p2klqrb.apps.googleusercontent.com</string>
+	<string>55899915124-r443i970jrc9joavid1v9ahmh78hcg7q.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBgfeqSitwy69apKBR7orka7bjzBtZEPnA</string>
+	<string>AIzaSyB3vaf7HEra10n_Jx7rhPsSx-011RHN-KA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>855154034836</string>
+	<string>55899915124</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hookdat</string>
+	<string>com.hookdatfishing</string>
 	<key>PROJECT_ID</key>
-	<string>hookdat-mobile</string>
+	<string>hookdat-fishing</string>
 	<key>STORAGE_BUCKET</key>
-	<string>hookdat-mobile.appspot.com</string>
+	<string>hookdat-fishing.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:855154034836:ios:e40a30168fa2474789cc81</string>
+	<string>1:55899915124:ios:e61462db2db40cb93b6221</string>
 </dict>
 </plist>

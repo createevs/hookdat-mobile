@@ -1,4 +1,4 @@
-package com.hookdat
+package com.hookdatfishing
 
 import io.flutter.embedding.android.FlutterActivity
 
