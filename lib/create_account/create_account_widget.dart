@@ -30,7 +30,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     super.initState();
     confirmPasswordController = TextEditingController();
     confirmPasswordVisibility = false;
-    emailAddressController = TextEditingController();
+    emailAddressController = TextEditingController(text: 'Email Address');
     fullNameController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
@@ -155,6 +155,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
+                                    prefixIcon: Icon(
+                                      Icons.person_outline,
+                                      size: 20,
+                                    ),
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -202,6 +206,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
+                                    prefixIcon: Icon(
+                                      Icons.alternate_email,
+                                      size: 20,
+                                    ),
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
@@ -249,6 +257,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
+                                    prefixIcon: Icon(
+                                      Icons.lock_outline,
+                                      size: 20,
+                                    ),
                                     suffixIcon: InkWell(
                                       onTap: () => setState(
                                         () => passwordVisibility =
@@ -309,6 +321,10 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
+                                    prefixIcon: Icon(
+                                      Icons.lock_outlined,
+                                      size: 20,
+                                    ),
                                     suffixIcon: InkWell(
                                       onTap: () => setState(
                                         () => confirmPasswordVisibility =
