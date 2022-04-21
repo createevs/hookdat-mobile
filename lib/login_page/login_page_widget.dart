@@ -24,7 +24,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   void initState() {
     super.initState();
-    emailAddressController = TextEditingController();
+    emailAddressController = TextEditingController(text: currentUserEmail);
     passwordController = TextEditingController();
     passwordVisibility = false;
   }
@@ -140,7 +140,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               controller: emailAddressController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Email Address',
                                 hintText: 'Enter your email here...',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -182,6 +181,24 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         children: [
                           Expanded(
                             child: TextFormField(
+                              onFieldSubmitted: (_) async {
+                                final user = await signInWithEmail(
+                                  context,
+                                  emailAddressController.text,
+                                  passwordController.text,
+                                );
+                                if (user == null) {
+                                  return;
+                                }
+
+                                await Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProfilePageWidget(),
+                                  ),
+                                  (r) => false,
+                                );
+                              },
                               controller: passwordController,
                               obscureText: !passwordVisibility,
                               decoration: InputDecoration(

@@ -134,8 +134,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: fullNameController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Full Name',
-                                    hintText: 'Enter your full name here...',
+                                    hintText: 'Enter First & Last Name',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
@@ -185,8 +184,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: emailAddressController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Your Email',
-                                    hintText: 'Enter your email here...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
@@ -236,8 +233,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: passwordController,
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
-                                    labelText: 'Create Password',
-                                    hintText: 'Enter your password here...',
+                                    hintText: 'Create Password',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
@@ -300,8 +296,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: confirmPasswordController,
                                   obscureText: !confirmPasswordVisibility,
                                   decoration: InputDecoration(
-                                    labelText: 'Confirm Password',
-                                    hintText: 'Confirm password here....',
+                                    hintText: 'Confirm Password',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
