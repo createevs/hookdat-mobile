@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../booking_page/booking_page_widget.dart';
 import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -97,18 +96,33 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
+                          Text(
+                            'Welcome Back, ',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Open Sans',
+                                  color: Color(0xFF090F13),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          AuthUserStreamWidget(
                             child: Text(
-                              'Welcome Back',
-                              textAlign: TextAlign.center,
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              valueOrDefault<String>(
+                                currentUserDisplayName,
+                                'Full Name',
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ),
                         ],
@@ -263,22 +277,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () async {
-                              final user = await signInWithEmail(
-                                context,
-                                emailAddressController.text,
-                                passwordController.text,
-                              );
-                              if (user == null) {
-                                return;
-                              }
-
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BookingPageWidget(),
-                                ),
-                              );
+                            onPressed: () {
+                              print('ButtonLogin pressed ...');
                             },
                             text: 'Login',
                             options: FFButtonOptions(

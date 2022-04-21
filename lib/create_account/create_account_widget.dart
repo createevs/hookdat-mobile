@@ -1,11 +1,10 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../booking_page/booking_page_widget.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
+import '../verification_page/verification_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,47 +16,22 @@ class CreateAccountWidget extends StatefulWidget {
   _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
 }
 
-class _CreateAccountWidgetState extends State<CreateAccountWidget>
-    with TickerProviderStateMixin {
+class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   TextEditingController confirmPasswordController;
   bool confirmPasswordVisibility;
   TextEditingController emailAddressController;
   TextEditingController fullNameController;
-  TextEditingController phoneNumberController;
   TextEditingController passwordController;
   bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 1000,
-      delay: 500,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 100),
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        opacity: 1,
-      ),
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
-      this,
-    );
-
     confirmPasswordController = TextEditingController();
     confirmPasswordVisibility = false;
     emailAddressController = TextEditingController();
     fullNameController = TextEditingController();
-    phoneNumberController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
   }
@@ -89,7 +63,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 110, 0, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +79,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 570,
+                    height: 495,
                     decoration: BoxDecoration(
                       color: Color(0xCBFFFFFF),
                       boxShadow: [
@@ -133,14 +107,14 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Get Started!',
+                                  'Awesome! Let\'s Get Started',
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .title1
                                       .override(
                                         fontFamily: 'Open Sans',
                                         color: Color(0xFF090F13),
-                                        fontSize: 24,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -161,53 +135,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Full Name',
-                                    hintText: 'Enter your full name here...',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            16, 24, 0, 24),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF2B343A),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(20, 16, 20, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: phoneNumberController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Phone Number',
                                     hintText: 'Enter your full name here...',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
@@ -442,7 +369,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                                   final usersCreateData = createUsersRecordData(
                                     email: emailAddressController.text,
                                     displayName: fullNameController.text,
-                                    phoneNumber: phoneNumberController.text,
                                   );
                                   await UsersRecord.collection
                                       .doc(user.uid)
@@ -452,14 +378,15 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => BookingPageWidget(),
+                                      builder: (context) =>
+                                          VerificationPageWidget(),
                                     ),
                                   );
                                 },
                                 text: 'Create Account',
                                 options: FFButtonOptions(
                                   width: 200,
-                                  height: 50,
+                                  height: 45,
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryColor,
                                   textStyle: FlutterFlowTheme.of(context)
@@ -486,7 +413,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                           thickness: 1,
                           indent: 20,
                           endIndent: 20,
-                          color: Color(0xBE000000),
+                          color: Color(0x65000000),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
@@ -505,7 +432,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                             text: 'or Login',
                             options: FFButtonOptions(
                               width: 170,
-                              height: 40,
+                              height: 35,
                               color: Colors.white,
                               textStyle: FlutterFlowTheme.of(context)
                                   .subtitle2
@@ -527,7 +454,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget>
                         ),
                       ],
                     ),
-                  ).animated([animationsMap['containerOnPageLoadAnimation']]),
+                  ),
                 ],
               ),
             ),

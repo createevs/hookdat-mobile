@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -28,14 +29,17 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
   @override
   void initState() {
     super.initState();
-    aptSuiteEtcController = TextEditingController(text: 'Suite, Apt, Etc');
-    contactNumberController = TextEditingController(text: 'Contact Number');
-    eMailController = TextEditingController(text: 'Email Address');
-    fullNameController = TextEditingController(text: 'Full Name');
-    streetAddressController = TextEditingController(text: 'Street Address');
-    cityController = TextEditingController(text: 'City');
-    stateController = TextEditingController(text: 'State');
-    zipcodeController = TextEditingController(text: 'Zipcode');
+    aptSuiteEtcController =
+        TextEditingController(text: currentUserDocument?.aptSuiteEtc);
+    contactNumberController = TextEditingController(text: currentPhoneNumber);
+    eMailController = TextEditingController(text: currentUserEmail);
+    fullNameController = TextEditingController(text: currentUserDisplayName);
+    streetAddressController =
+        TextEditingController(text: currentUserDocument?.streetAddress);
+    cityController = TextEditingController(text: currentUserDocument?.city);
+    stateController = TextEditingController(text: currentUserDocument?.state);
+    zipcodeController =
+        TextEditingController(text: currentUserDocument?.zipcode);
   }
 
   @override
@@ -203,43 +207,45 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'fullNameController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'fullNameController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
+                                    controller: fullNameController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.person,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: FlutterFlowTheme.of(context)
+                                              .black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
                                   ),
-                                  controller: fullNameController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.person,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color:
-                                            FlutterFlowTheme.of(context).black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
                                 ),
                               ),
                             ],
@@ -307,199 +313,14 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'contactNumberController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
-                                  ),
-                                  controller: contactNumberController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.phone_android_outlined,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  keyboardType: TextInputType.phone,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'streetAddressController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
-                                  ),
-                                  controller: streetAddressController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.add_location,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  keyboardType: TextInputType.streetAddress,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'aptSuiteEtcController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
-                                  ),
-                                  controller: aptSuiteEtcController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.business_rounded,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  keyboardType: TextInputType.phone,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'cityController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
-                                  ),
-                                  controller: cityController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.star,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10, 0, 0, 0),
+                                child: AuthUserStreamWidget(
                                   child: TextFormField(
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'stateController',
+                                      'contactNumberController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
-                                    controller: stateController,
+                                    controller: contactNumberController,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       enabledBorder: OutlineInputBorder(
@@ -517,7 +338,157 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       prefixIcon: Icon(
-                                        Icons.location_history_rounded,
+                                        Icons.phone_android_outlined,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    keyboardType: TextInputType.phone,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'streetAddressController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
+                                    controller: streetAddressController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.add_location,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    keyboardType: TextInputType.streetAddress,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'aptSuiteEtcController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
+                                    controller: aptSuiteEtcController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.business_rounded,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    keyboardType: TextInputType.phone,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'cityController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
+                                    controller: cityController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.star,
                                         size: 20,
                                       ),
                                     ),
@@ -532,6 +503,53 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   ),
                                 ),
                               ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 0, 0),
+                                  child: AuthUserStreamWidget(
+                                    child: TextFormField(
+                                      onChanged: (_) => EasyDebounce.debounce(
+                                        'stateController',
+                                        Duration(milliseconds: 2000),
+                                        () => setState(() {}),
+                                      ),
+                                      controller: stateController,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDBE2E7),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0xFFDBE2E7),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        prefixIcon: Icon(
+                                          Icons.location_history_rounded,
+                                          size: 20,
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Open Sans',
+                                            color: Color(0xFF090F13),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -541,43 +559,45 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: TextFormField(
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    'zipcodeController',
-                                    Duration(milliseconds: 2000),
-                                    () => setState(() {}),
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'zipcodeController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
+                                    controller: zipcodeController,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      prefixIcon: Icon(
+                                        Icons.format_list_numbered,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Open Sans',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    keyboardType: TextInputType.number,
                                   ),
-                                  controller: zipcodeController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    prefixIcon: Icon(
-                                      Icons.format_list_numbered,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Open Sans',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                  keyboardType: TextInputType.number,
                                 ),
                               ),
                             ],
@@ -590,7 +610,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             children: [
                               Expanded(
                                 child: SwitchListTile(
-                                  value: switchListTileValue ??= true,
+                                  value: switchListTileValue ??= false,
                                   onChanged: (newValue) => setState(
                                       () => switchListTileValue = newValue),
                                   title: Text(

@@ -2,7 +2,6 @@ import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../intro_onboarding/intro_onboarding_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -34,7 +33,22 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
         opacity: 1,
       ),
     ),
-    'buttonOnPageLoadAnimation': AnimationInfo(
+    'buttonOnPageLoadAnimation1': AnimationInfo(
+      curve: Curves.bounceOut,
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 1010,
+      delay: 450,
+      fadeIn: true,
+      initialState: AnimationState(
+        scale: 0.1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+    'buttonOnPageLoadAnimation2': AnimationInfo(
       curve: Curves.bounceOut,
       trigger: AnimationTrigger.onPageLoad,
       duration: 1010,
@@ -165,18 +179,10 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () async {
-                        await Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 300),
-                            reverseDuration: Duration(milliseconds: 300),
-                            child: IntroOnboardingWidget(),
-                          ),
-                        );
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
-                      text: 'Check Us Out!',
+                      text: 'Create Account or Login',
                       options: FFButtonOptions(
                         width: 310,
                         height: 50,
@@ -187,14 +193,46 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                                   color: FlutterFlowTheme.of(context).black,
                                   fontWeight: FontWeight.bold,
                                 ),
-                        elevation: 5,
+                        elevation: 10,
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,
                         ),
                         borderRadius: 12,
                       ),
-                    ).animated([animationsMap['buttonOnPageLoadAnimation']]),
+                    ).animated([animationsMap['buttonOnPageLoadAnimation1']]),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FFButtonWidget(
+                      onPressed: () {
+                        print('Button pressed ...');
+                      },
+                      text: 'Browse As Guest',
+                      options: FFButtonOptions(
+                        width: 310,
+                        height: 50,
+                        color: FlutterFlowTheme.of(context).secondaryColor,
+                        textStyle:
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Open Sans',
+                                  color: FlutterFlowTheme.of(context).white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                        elevation: 10,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: 12,
+                      ),
+                    ).animated([animationsMap['buttonOnPageLoadAnimation2']]),
                   ],
                 ),
               ),
