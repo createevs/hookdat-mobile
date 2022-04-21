@@ -3,6 +3,7 @@ import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../profile_page/profile_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -277,8 +278,23 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () {
-                              print('ButtonLogin pressed ...');
+                            onPressed: () async {
+                              final user = await signInWithEmail(
+                                context,
+                                emailAddressController.text,
+                                passwordController.text,
+                              );
+                              if (user == null) {
+                                return;
+                              }
+
+                              await Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfilePageWidget(),
+                                ),
+                                (r) => false,
+                              );
                             },
                             text: 'Login',
                             options: FFButtonOptions(
