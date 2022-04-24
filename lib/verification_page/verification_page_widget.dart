@@ -44,6 +44,11 @@ class _VerificationPageWidgetState extends State<VerificationPageWidget> {
                   width: MediaQuery.of(context).size.width * 0.85,
                   decoration: BoxDecoration(
                     color: Color(0x7FEEEEEE),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x7E000000),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
@@ -105,8 +110,12 @@ class _VerificationPageWidgetState extends State<VerificationPageWidget> {
                                       const Duration(milliseconds: 3000));
                                   await Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ProfilePageWidget(),
+                                    PageTransition(
+                                      type: PageTransitionType.fade,
+                                      duration: Duration(milliseconds: 5000),
+                                      reverseDuration:
+                                          Duration(milliseconds: 5000),
+                                      child: ProfilePageWidget(),
                                     ),
                                   );
                                 },

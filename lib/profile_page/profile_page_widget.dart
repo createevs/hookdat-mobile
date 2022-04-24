@@ -1,7 +1,9 @@
 import '../auth/auth_util.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/upload_media.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -15,6 +17,7 @@ class ProfilePageWidget extends StatefulWidget {
 }
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
+  String uploadedFileUrl = '';
   TextEditingController aptSuiteEtcController;
   TextEditingController contactNumberController;
   TextEditingController eMailController;
@@ -157,15 +160,55 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                           child: Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.asset(
-                                'assets/images/default-profile-pic.png',
+                            child: InkWell(
+                              onTap: () async {
+                                final selectedMedia =
+                                    await selectMediaWithSourceBottomSheet(
+                                  context: context,
+                                  allowPhoto: true,
+                                  pickerFontFamily: 'Open Sans',
+                                );
+                                if (selectedMedia != null &&
+                                    selectedMedia.every((m) =>
+                                        validateFileFormat(
+                                            m.storagePath, context))) {
+                                  showUploadMessage(
+                                    context,
+                                    'Uploading file...',
+                                    showLoading: true,
+                                  );
+                                  final downloadUrls = await Future.wait(
+                                      selectedMedia.map((m) async =>
+                                          await uploadData(
+                                              m.storagePath, m.bytes)));
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  if (downloadUrls != null) {
+                                    setState(() =>
+                                        uploadedFileUrl = downloadUrls.first);
+                                    showUploadMessage(
+                                      context,
+                                      'Success!',
+                                    );
+                                  } else {
+                                    showUploadMessage(
+                                      context,
+                                      'Failed to upload media',
+                                    );
+                                    return;
+                                  }
+                                }
+                              },
+                              child: Container(
+                                width: 80,
+                                height: 80,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.asset(
+                                  'assets/images/default-profile-pic.png',
+                                ),
                               ),
                             ),
                           ),
@@ -217,6 +260,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: fullNameController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Full Name',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -266,6 +310,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                   controller: eMailController,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    labelText: 'Email Address',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
@@ -323,6 +368,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: contactNumberController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Contact Number',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -373,6 +419,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: streetAddressController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Street Address',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -423,6 +470,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: aptSuiteEtcController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Apt, Suite, Etc',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -473,6 +521,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: cityController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'City',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -488,7 +537,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       prefixIcon: Icon(
-                                        Icons.star,
+                                        Icons.location_city_sharp,
                                         size: 20,
                                       ),
                                     ),
@@ -517,6 +566,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                       controller: stateController,
                                       obscureText: false,
                                       decoration: InputDecoration(
+                                        labelText: 'State',
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Color(0xFFDBE2E7),
@@ -534,7 +584,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                               BorderRadius.circular(8),
                                         ),
                                         prefixIcon: Icon(
-                                          Icons.location_history_rounded,
+                                          Icons.star_rate_sharp,
                                           size: 20,
                                         ),
                                       ),
@@ -569,6 +619,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     controller: zipcodeController,
                                     obscureText: false,
                                     decoration: InputDecoration(
+                                      labelText: 'Zipcode',
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
@@ -584,7 +635,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       prefixIcon: Icon(
-                                        Icons.format_list_numbered,
+                                        Icons.confirmation_num,
                                         size: 20,
                                       ),
                                     ),

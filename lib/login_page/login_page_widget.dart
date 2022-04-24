@@ -24,7 +24,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   void initState() {
     super.initState();
-    emailAddressController = TextEditingController(text: currentUserEmail);
+    emailAddressController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
   }
@@ -140,23 +140,23 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               controller: emailAddressController,
                               obscureText: false,
                               decoration: InputDecoration(
-                                hintText: 'Enter your email here...',
+                                labelText: 'Email Address',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color(0xFFDBE2E7),
-                                    width: 0,
+                                    color: Color(0x7F000000),
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color(0xFFDBE2E7),
-                                    width: 0,
+                                    color: Color(0x7F000000),
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: Color(0x00FFFFFF),
                                 contentPadding: EdgeInsetsDirectional.fromSTEB(
                                     16, 24, 0, 24),
                               ),
@@ -203,23 +203,22 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               obscureText: !passwordVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                hintText: 'Enter your password here...',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color(0xFFDBE2E7),
-                                    width: 0,
+                                    color: Color(0x7F000000),
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: Color(0xFFDBE2E7),
-                                    width: 0,
+                                    color: Color(0x7F000000),
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: Color(0x00FFFFFF),
                                 contentPadding: EdgeInsetsDirectional.fromSTEB(
                                     16, 24, 0, 24),
                                 suffixIcon: InkWell(
@@ -284,7 +283,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryColor,
                                     fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.normal,
                                   ),
                               elevation: 3,
                               borderSide: BorderSide(
@@ -325,7 +324,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     fontFamily: 'Open Sans',
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.normal,
                                   ),
                               elevation: 3,
                               borderSide: BorderSide(
@@ -346,7 +345,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       color: Color(0xFFDBE2E7),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           await Navigator.push(

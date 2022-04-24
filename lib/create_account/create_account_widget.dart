@@ -30,7 +30,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     super.initState();
     confirmPasswordController = TextEditingController();
     confirmPasswordVisibility = false;
-    emailAddressController = TextEditingController(text: 'Email Address');
+    emailAddressController = TextEditingController();
     fullNameController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
@@ -134,23 +134,22 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: fullNameController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: 'Enter First & Last Name',
+                                    labelText: 'Full Name',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7F000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7F000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
@@ -163,7 +162,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        color: Color(0xFF2B343A),
+                                        color: Color(0x9A2B343A),
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -184,22 +183,23 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: emailAddressController,
                                   obscureText: false,
                                   decoration: InputDecoration(
+                                    labelText: 'Email Address',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7E000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7E000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: Color(0x00FFFFFF),
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
@@ -212,10 +212,11 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        color: Color(0xFF2B343A),
+                                        color: Color(0x7F000000),
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
+                                  keyboardType: TextInputType.emailAddress,
                                 ),
                               ),
                             ],
@@ -233,23 +234,23 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: passwordController,
                                   obscureText: !passwordVisibility,
                                   decoration: InputDecoration(
-                                    hintText: 'Create Password',
+                                    labelText: 'Create Password',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x80000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x80000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: Color(0x00FFFFFF),
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
@@ -275,7 +276,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        color: Color(0xFF2B343A),
+                                        color: Color(0x992B343A),
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -296,23 +297,23 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   controller: confirmPasswordController,
                                   obscureText: !confirmPasswordVisibility,
                                   decoration: InputDecoration(
-                                    hintText: 'Confirm Password',
+                                    labelText: 'Confirm Password',
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7F000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 0,
+                                        color: Color(0x7F000000),
+                                        width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: Color(0x00FFFFFF),
                                     contentPadding:
                                         EdgeInsetsDirectional.fromSTEB(
                                             16, 24, 0, 24),
@@ -338,7 +339,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Open Sans',
-                                        color: Color(0xFF2B343A),
+                                        color: Color(0x982B343A),
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -406,7 +407,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                         fontFamily: 'Open Sans',
                                         color: Colors.white,
                                         fontSize: 18,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.normal,
                                       ),
                                   elevation: 3,
                                   borderSide: BorderSide(
@@ -427,7 +428,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           color: Color(0x65000000),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
                               await Navigator.push(

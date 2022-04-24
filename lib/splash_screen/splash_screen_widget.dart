@@ -1,7 +1,9 @@
+import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../login_page/login_page_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -101,7 +103,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 125, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -179,10 +181,15 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CreateAccountWidget(),
+                          ),
+                        );
                       },
-                      text: 'Create Account or Login',
+                      text: 'Create Account',
                       options: FFButtonOptions(
                         width: 310,
                         height: 50,
@@ -211,10 +218,18 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 3000),
+                            reverseDuration: Duration(milliseconds: 3000),
+                            child: LoginPageWidget(),
+                          ),
+                        );
                       },
-                      text: 'Browse As Guest',
+                      text: 'Login',
                       options: FFButtonOptions(
                         width: 310,
                         height: 50,
@@ -233,6 +248,24 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                         borderRadius: 12,
                       ),
                     ).animated([animationsMap['buttonOnPageLoadAnimation2']]),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 30),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Browse As Guest',
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Open Sans',
+                            color: FlutterFlowTheme.of(context).tertiaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                          ),
+                    ),
                   ],
                 ),
               ),
