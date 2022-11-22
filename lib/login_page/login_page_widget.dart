@@ -3,22 +3,24 @@ import '../create_account/create_account_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../profile_page/profile_page_widget.dart';
+import '../forgot_password/forgot_password_widget.dart';
+import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginPageWidget extends StatefulWidget {
-  const LoginPageWidget({Key key}) : super(key: key);
+  const LoginPageWidget({Key? key}) : super(key: key);
 
   @override
   _LoginPageWidgetState createState() => _LoginPageWidgetState();
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
-  TextEditingController emailAddressController;
-  TextEditingController passwordController;
-  bool passwordVisibility;
+  TextEditingController? emailAddressController;
+  TextEditingController? passwordController;
+
+  late bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,6 +29,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     emailAddressController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
+  }
+
+  @override
+  void dispose() {
+    emailAddressController?.dispose();
+    passwordController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -144,14 +153,28 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x7F000000),
-                                    width: 2,
+                                    width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x7F000000),
-                                    width: 2,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -181,11 +204,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         children: [
                           Expanded(
                             child: TextFormField(
+                              controller: passwordController,
                               onFieldSubmitted: (_) async {
                                 final user = await signInWithEmail(
                                   context,
-                                  emailAddressController.text,
-                                  passwordController.text,
+                                  emailAddressController!.text,
+                                  passwordController!.text,
                                 );
                                 if (user == null) {
                                   return;
@@ -194,26 +218,40 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 await Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProfilePageWidget(),
+                                    builder: (context) =>
+                                        NavBarPage(initialPage: 'ProfilePage'),
                                   ),
                                   (r) => false,
                                 );
                               },
-                              controller: passwordController,
                               obscureText: !passwordVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x7F000000),
-                                    width: 2,
+                                    width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x7F000000),
-                                    width: 2,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -226,6 +264,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     () => passwordVisibility =
                                         !passwordVisibility,
                                   ),
+                                  focusNode: FocusNode(skipTraversal: true),
                                   child: Icon(
                                     passwordVisibility
                                         ? Icons.visibility_outlined
@@ -256,19 +295,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         children: [
                           FFButtonWidget(
                             onPressed: () async {
-                              if (emailAddressController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Email required!',
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              await resetPassword(
-                                email: emailAddressController.text,
-                                context: context,
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ForgotPasswordWidget(),
+                                ),
                               );
                             },
                             text: 'Forgot Password?',
@@ -290,15 +321,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 color: Colors.transparent,
                                 width: 1,
                               ),
-                              borderRadius: 12,
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           FFButtonWidget(
                             onPressed: () async {
                               final user = await signInWithEmail(
                                 context,
-                                emailAddressController.text,
-                                passwordController.text,
+                                emailAddressController!.text,
+                                passwordController!.text,
                               );
                               if (user == null) {
                                 return;
@@ -307,7 +338,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProfilePageWidget(),
+                                  builder: (context) =>
+                                      NavBarPage(initialPage: 'ProfilePage'),
                                 ),
                                 (r) => false,
                               );
@@ -331,7 +363,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 color: Colors.transparent,
                                 width: 1,
                               ),
-                              borderRadius: 12,
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ],
@@ -374,7 +406,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             color: Colors.transparent,
                             width: 1,
                           ),
-                          borderRadius: 12,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                     ),

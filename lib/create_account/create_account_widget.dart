@@ -10,19 +10,21 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateAccountWidget extends StatefulWidget {
-  const CreateAccountWidget({Key key}) : super(key: key);
+  const CreateAccountWidget({Key? key}) : super(key: key);
 
   @override
   _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
 }
 
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
-  TextEditingController confirmPasswordController;
-  bool confirmPasswordVisibility;
-  TextEditingController emailAddressController;
-  TextEditingController fullNameController;
-  TextEditingController passwordController;
-  bool passwordVisibility;
+  TextEditingController? confirmPasswordController;
+
+  late bool confirmPasswordVisibility;
+  TextEditingController? emailAddressController;
+  TextEditingController? fullNameController;
+  TextEditingController? passwordController;
+
+  late bool passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -34,6 +36,15 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     fullNameController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
+  }
+
+  @override
+  void dispose() {
+    confirmPasswordController?.dispose();
+    emailAddressController?.dispose();
+    fullNameController?.dispose();
+    passwordController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -138,14 +149,28 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7F000000),
-                                        width: 2,
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7F000000),
-                                        width: 2,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -187,14 +212,28 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7E000000),
-                                        width: 2,
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7E000000),
-                                        width: 2,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -238,14 +277,28 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x80000000),
-                                        width: 2,
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x80000000),
-                                        width: 2,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -263,6 +316,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                         () => passwordVisibility =
                                             !passwordVisibility,
                                       ),
+                                      focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
                                         passwordVisibility
                                             ? Icons.visibility_outlined
@@ -301,14 +355,28 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7F000000),
-                                        width: 2,
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x7F000000),
-                                        width: 2,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -326,6 +394,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                         () => confirmPasswordVisibility =
                                             !confirmPasswordVisibility,
                                       ),
+                                      focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
                                         confirmPasswordVisibility
                                             ? Icons.visibility_outlined
@@ -357,8 +426,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  if (passwordController.text !=
-                                      confirmPasswordController.text) {
+                                  if (passwordController?.text !=
+                                      confirmPasswordController?.text) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
@@ -371,20 +440,21 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
                                   final user = await createAccountWithEmail(
                                     context,
-                                    emailAddressController.text,
-                                    passwordController.text,
+                                    emailAddressController!.text,
+                                    passwordController!.text,
                                   );
                                   if (user == null) {
                                     return;
                                   }
 
-                                  final usersCreateData = createUsersRecordData(
-                                    email: emailAddressController.text,
-                                    displayName: fullNameController.text,
+                                  final bookingsCreateData =
+                                      createBookingsRecordData(
+                                    email: emailAddressController!.text,
+                                    displayName: fullNameController!.text,
                                   );
-                                  await UsersRecord.collection
+                                  await BookingsRecord.collection
                                       .doc(user.uid)
-                                      .update(usersCreateData);
+                                      .update(bookingsCreateData);
 
                                   await sendEmailVerification();
                                   await Navigator.push(
@@ -406,7 +476,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                       .override(
                                         fontFamily: 'Open Sans',
                                         color: Colors.white,
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.normal,
                                       ),
                                   elevation: 3,
@@ -414,7 +484,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                     color: Colors.transparent,
                                     width: 1,
                                   ),
-                                  borderRadius: 12,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                             ],
@@ -460,7 +530,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 color: Colors.transparent,
                                 width: 1,
                               ),
-                              borderRadius: 12,
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                         ),

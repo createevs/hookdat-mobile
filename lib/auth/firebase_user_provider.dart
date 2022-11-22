@@ -3,11 +3,11 @@ import 'package:rxdart/rxdart.dart';
 
 class HookDatFishingFirebaseUser {
   HookDatFishingFirebaseUser(this.user);
-  User user;
+  User? user;
   bool get loggedIn => user != null;
 }
 
-HookDatFishingFirebaseUser currentUser;
+HookDatFishingFirebaseUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
 Stream<HookDatFishingFirebaseUser> hookDatFishingFirebaseUserStream() =>
     FirebaseAuth.instance
@@ -16,4 +16,8 @@ Stream<HookDatFishingFirebaseUser> hookDatFishingFirebaseUserStream() =>
             ? TimerStream(true, const Duration(seconds: 1))
             : Stream.value(user))
         .map<HookDatFishingFirebaseUser>(
-            (user) => currentUser = HookDatFishingFirebaseUser(user));
+      (user) {
+        currentUser = HookDatFishingFirebaseUser(user);
+        return currentUser!;
+      },
+    );

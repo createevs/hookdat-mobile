@@ -1,5 +1,4 @@
 import '../auth/auth_util.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -10,51 +9,33 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
-  const ForgotPasswordWidget({Key key}) : super(key: key);
+  const ForgotPasswordWidget({Key? key}) : super(key: key);
 
   @override
   _ForgotPasswordWidgetState createState() => _ForgotPasswordWidgetState();
 }
 
-class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
-    with TickerProviderStateMixin {
-  TextEditingController resetEmailController;
+class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
+  TextEditingController? resetEmailController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final animationsMap = {
-    'imageOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 0,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
-      this,
-    );
-
     resetEmailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    resetEmailController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: Colors.transparent,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
@@ -70,23 +51,24 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
             ),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(30, 125, 30, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
                       child: Image.asset(
                         'assets/images/hook-dat-logo-red-hook-shadow.png',
-                        width: 300,
+                        width: 280,
                         height: 200,
                         fit: BoxFit.cover,
-                      ).animated([animationsMap['imageOnPageLoadAnimation']]),
+                      ),
                     ),
                   ],
                 ),
@@ -113,12 +95,12 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                         child: TextFormField(
+                          controller: resetEmailController,
                           onChanged: (_) => EasyDebounce.debounce(
                             'resetEmailController',
                             Duration(milliseconds: 2000),
                             () => setState(() {}),
                           ),
-                          controller: resetEmailController,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Email Address',
@@ -136,6 +118,20 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             filled: true,
                             fillColor: Color(0x32FFFFFF),
                             prefixIcon: Icon(
@@ -143,11 +139,12 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                               color: Color(0x80FFFFFF),
                               size: 22,
                             ),
-                            suffixIcon: resetEmailController.text.isNotEmpty
+                            suffixIcon: resetEmailController!.text.isNotEmpty
                                 ? InkWell(
-                                    onTap: () => setState(
-                                      () => resetEmailController.clear(),
-                                    ),
+                                    onTap: () async {
+                                      resetEmailController?.clear();
+                                      setState(() {});
+                                    },
                                     child: Icon(
                                       Icons.clear,
                                       color: Color(0x62FFFFFF),
@@ -175,7 +172,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                       padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (resetEmailController.text.isEmpty) {
+                          if (resetEmailController!.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -186,10 +183,11 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                             return;
                           }
                           await resetPassword(
-                            email: resetEmailController.text,
+                            email: resetEmailController!.text,
                             context: context,
                           );
-                          if (/* NOT RECOMMENDED */ resetEmailController.text ==
+                          if (/* NOT RECOMMENDED */ resetEmailController!
+                                  .text ==
                               'true') {
                             await Navigator.push(
                               context,
@@ -217,7 +215,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                             color: Colors.transparent,
                             width: 1,
                           ),
-                          borderRadius: 12,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                     ),

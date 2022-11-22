@@ -11,49 +11,64 @@ abstract class BookingsRecord
   static Serializer<BookingsRecord> get serializer =>
       _$bookingsRecordSerializer;
 
-  @nullable
-  DocumentReference get user;
+  DocumentReference? get user;
 
-  @nullable
   @BuiltValueField(wireName: 'date_time')
-  DateTime get dateTime;
+  DateTime? get dateTime;
 
-  @nullable
   @BuiltValueField(wireName: 'time_of_day')
-  BuiltList<String> get timeOfDay;
+  BuiltList<String>? get timeOfDay;
 
-  @nullable
   @BuiltValueField(wireName: 'charter_type')
-  BuiltList<String> get charterType;
+  BuiltList<String>? get charterType;
 
-  @nullable
   @BuiltValueField(wireName: 'number_of_anglers')
-  BuiltList<String> get numberOfAnglers;
+  BuiltList<String>? get numberOfAnglers;
 
-  @nullable
   @BuiltValueField(wireName: 'is_confirmed')
-  bool get isConfirmed;
+  bool? get isConfirmed;
 
-  @nullable
+  String? get email;
+
+  @BuiltValueField(wireName: 'display_name')
+  String? get displayName;
+
+  @BuiltValueField(wireName: 'photo_url')
+  String? get photoUrl;
+
+  String? get uid;
+
+  @BuiltValueField(wireName: 'created_time')
+  DateTime? get createdTime;
+
+  @BuiltValueField(wireName: 'phone_number')
+  String? get phoneNumber;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference get reference;
+  DocumentReference? get ffRef;
+  DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(BookingsRecordBuilder builder) => builder
     ..timeOfDay = ListBuilder()
     ..charterType = ListBuilder()
     ..numberOfAnglers = ListBuilder()
-    ..isConfirmed = false;
+    ..isConfirmed = false
+    ..email = ''
+    ..displayName = ''
+    ..photoUrl = ''
+    ..uid = ''
+    ..phoneNumber = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('bookings');
 
   static Stream<BookingsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   static Future<BookingsRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s)));
+      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
 
   BookingsRecord._();
   factory BookingsRecord([void Function(BookingsRecordBuilder) updates]) =
@@ -62,20 +77,38 @@ abstract class BookingsRecord
   static BookingsRecord getDocumentFromData(
           Map<String, dynamic> data, DocumentReference reference) =>
       serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference});
+          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
 }
 
 Map<String, dynamic> createBookingsRecordData({
-  DocumentReference user,
-  DateTime dateTime,
-  bool isConfirmed,
-}) =>
-    serializers.toFirestore(
-        BookingsRecord.serializer,
-        BookingsRecord((b) => b
-          ..user = user
-          ..dateTime = dateTime
-          ..timeOfDay = null
-          ..charterType = null
-          ..numberOfAnglers = null
-          ..isConfirmed = isConfirmed));
+  DocumentReference? user,
+  DateTime? dateTime,
+  bool? isConfirmed,
+  String? email,
+  String? displayName,
+  String? photoUrl,
+  String? uid,
+  DateTime? createdTime,
+  String? phoneNumber,
+}) {
+  final firestoreData = serializers.toFirestore(
+    BookingsRecord.serializer,
+    BookingsRecord(
+      (b) => b
+        ..user = user
+        ..dateTime = dateTime
+        ..timeOfDay = null
+        ..charterType = null
+        ..numberOfAnglers = null
+        ..isConfirmed = isConfirmed
+        ..email = email
+        ..displayName = displayName
+        ..photoUrl = photoUrl
+        ..uid = uid
+        ..createdTime = createdTime
+        ..phoneNumber = phoneNumber,
+    ),
+  );
+
+  return firestoreData;
+}

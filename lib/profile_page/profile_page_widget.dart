@@ -10,45 +10,63 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePageWidget extends StatefulWidget {
-  const ProfilePageWidget({Key key}) : super(key: key);
+  const ProfilePageWidget({Key? key}) : super(key: key);
 
   @override
   _ProfilePageWidgetState createState() => _ProfilePageWidgetState();
 }
 
 class _ProfilePageWidgetState extends State<ProfilePageWidget> {
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
-  TextEditingController aptSuiteEtcController;
-  TextEditingController contactNumberController;
-  TextEditingController eMailController;
-  TextEditingController fullNameController;
-  TextEditingController streetAddressController;
-  TextEditingController cityController;
-  TextEditingController stateController;
-  TextEditingController zipcodeController;
-  bool switchListTileValue;
+
+  TextEditingController? aptSuiteEtcController;
+  TextEditingController? contactNumberController;
+  TextEditingController? eMailController;
+  TextEditingController? fullNameController;
+  TextEditingController? streetAddressController;
+  TextEditingController? cityController;
+  TextEditingController? stateController;
+  TextEditingController? zipcodeController;
+  bool? switchListTileValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    aptSuiteEtcController =
-        TextEditingController(text: currentUserDocument?.aptSuiteEtc);
+    aptSuiteEtcController = TextEditingController(text: '[User Email]');
     contactNumberController = TextEditingController(text: currentPhoneNumber);
     eMailController = TextEditingController(text: currentUserEmail);
-    fullNameController = TextEditingController(text: currentUserDisplayName);
-    streetAddressController =
-        TextEditingController(text: currentUserDocument?.streetAddress);
-    cityController = TextEditingController(text: currentUserDocument?.city);
-    stateController = TextEditingController(text: currentUserDocument?.state);
-    zipcodeController =
-        TextEditingController(text: currentUserDocument?.zipcode);
+    fullNameController = TextEditingController(
+        text: valueOrDefault<String>(
+      currentUserDisplayName,
+      'Full Name',
+    ));
+    streetAddressController = TextEditingController();
+    cityController = TextEditingController(text: currentUserEmail);
+    stateController =
+        TextEditingController(text: currentUserEmailVerified.toString());
+    zipcodeController = TextEditingController(text: '[User Email]');
+  }
+
+  @override
+  void dispose() {
+    aptSuiteEtcController?.dispose();
+    contactNumberController?.dispose();
+    eMailController?.dispose();
+    fullNameController?.dispose();
+    streetAddressController?.dispose();
+    cityController?.dispose();
+    stateController?.dispose();
+    zipcodeController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).secondaryColor,
         automaticallyImplyLeading: false,
@@ -75,7 +93,6 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
         centerTitle: false,
         elevation: 2,
       ),
-      backgroundColor: Color(0xFFF1F4F8),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -172,29 +189,37 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     selectedMedia.every((m) =>
                                         validateFileFormat(
                                             m.storagePath, context))) {
-                                  showUploadMessage(
-                                    context,
-                                    'Uploading file...',
-                                    showLoading: true,
-                                  );
-                                  final downloadUrls = await Future.wait(
-                                      selectedMedia.map((m) async =>
-                                          await uploadData(
-                                              m.storagePath, m.bytes)));
-                                  ScaffoldMessenger.of(context)
-                                      .hideCurrentSnackBar();
-                                  if (downloadUrls != null) {
+                                  setState(() => isMediaUploading = true);
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    showUploadMessage(
+                                      context,
+                                      'Uploading file...',
+                                      showLoading: true,
+                                    );
+                                    downloadUrls = (await Future.wait(
+                                      selectedMedia.map(
+                                        (m) async => await uploadData(
+                                            m.storagePath, m.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    isMediaUploading = false;
+                                  }
+                                  if (downloadUrls.length ==
+                                      selectedMedia.length) {
                                     setState(() =>
                                         uploadedFileUrl = downloadUrls.first);
-                                    showUploadMessage(
-                                      context,
-                                      'Success!',
-                                    );
+                                    showUploadMessage(context, 'Success!');
                                   } else {
+                                    setState(() {});
                                     showUploadMessage(
-                                      context,
-                                      'Failed to upload media',
-                                    );
+                                        context, 'Failed to upload media');
                                     return;
                                   }
                                 }
@@ -252,12 +277,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               Expanded(
                                 child: AuthUserStreamWidget(
                                   child: TextFormField(
+                                    controller: fullNameController,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'fullNameController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
-                                    controller: fullNameController,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Full Name',
@@ -271,6 +296,20 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
@@ -302,12 +341,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  controller: eMailController,
                                   onChanged: (_) => EasyDebounce.debounce(
                                     'eMailController',
                                     Duration(milliseconds: 2000),
                                     () => setState(() {}),
                                   ),
-                                  controller: eMailController,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Email Address',
@@ -329,6 +368,20 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -360,12 +413,12 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               Expanded(
                                 child: AuthUserStreamWidget(
                                   child: TextFormField(
+                                    controller: contactNumberController,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'contactNumberController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
-                                    controller: contactNumberController,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelText: 'Contact Number',
@@ -379,6 +432,20 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0xFFDBE2E7),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(8),
@@ -409,46 +476,58 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'streetAddressController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    controller: streetAddressController,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Street Address',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.add_location,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    keyboardType: TextInputType.streetAddress,
+                                child: TextFormField(
+                                  controller: streetAddressController,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'streetAddressController',
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {}),
                                   ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Street Address',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.add_location,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  keyboardType: TextInputType.streetAddress,
                                 ),
                               ),
                             ],
@@ -460,46 +539,58 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'aptSuiteEtcController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    controller: aptSuiteEtcController,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Apt, Suite, Etc',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.business_rounded,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    keyboardType: TextInputType.phone,
+                                child: TextFormField(
+                                  controller: aptSuiteEtcController,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'aptSuiteEtcController',
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {}),
                                   ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Apt, Suite, Etc',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.business_rounded,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  keyboardType: TextInputType.phone,
                                 ),
                               ),
                             ],
@@ -511,45 +602,58 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'cityController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    controller: cityController,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'City',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.location_city_sharp,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                child: TextFormField(
+                                  controller: cityController,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'cityController',
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {}),
                                   ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Email Address',
+                                    hintText: 'Enter a new email',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.location_city_sharp,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
                                 ),
                               ),
                               Expanded(
@@ -558,15 +662,16 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                       10, 0, 0, 0),
                                   child: AuthUserStreamWidget(
                                     child: TextFormField(
+                                      controller: stateController,
                                       onChanged: (_) => EasyDebounce.debounce(
                                         'stateController',
                                         Duration(milliseconds: 2000),
                                         () => setState(() {}),
                                       ),
-                                      controller: stateController,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'State',
+                                        labelText: 'Email Address',
+                                        hintText: 'Enter a new email',
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Color(0xFFDBE2E7),
@@ -578,6 +683,22 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                             color: Color(0xFFDBE2E7),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
                                             width: 1,
                                           ),
                                           borderRadius:
@@ -609,46 +730,59 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'zipcodeController',
-                                      Duration(milliseconds: 2000),
-                                      () => setState(() {}),
-                                    ),
-                                    controller: zipcodeController,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelText: 'Zipcode',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0xFFDBE2E7),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      prefixIcon: Icon(
-                                        Icons.confirmation_num,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Open Sans',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    keyboardType: TextInputType.number,
+                                child: TextFormField(
+                                  controller: zipcodeController,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'zipcodeController',
+                                    Duration(milliseconds: 2000),
+                                    () => setState(() {}),
                                   ),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Email Address',
+                                    hintText: 'Enter a new email',
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFDBE2E7),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    prefixIcon: Icon(
+                                      Icons.confirmation_num,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Open Sans',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  keyboardType: TextInputType.number,
                                 ),
                               ),
                             ],
@@ -662,8 +796,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                               Expanded(
                                 child: SwitchListTile(
                                   value: switchListTileValue ??= false,
-                                  onChanged: (newValue) => setState(
-                                      () => switchListTileValue = newValue),
+                                  onChanged: (newValue) async {
+                                    setState(
+                                        () => switchListTileValue = newValue!);
+                                  },
                                   title: Text(
                                     'Recieve Notifications',
                                     style: FlutterFlowTheme.of(context)

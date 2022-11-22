@@ -1,82 +1,23 @@
 import '../create_account/create_account_widget.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
+import '../main.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreenWidget extends StatefulWidget {
-  const SplashScreenWidget({Key key}) : super(key: key);
+  const SplashScreenWidget({Key? key}) : super(key: key);
 
   @override
   _SplashScreenWidgetState createState() => _SplashScreenWidgetState();
 }
 
-class _SplashScreenWidgetState extends State<SplashScreenWidget>
-    with TickerProviderStateMixin {
-  final animationsMap = {
-    'imageOnPageLoadAnimation': AnimationInfo(
-      curve: Curves.elasticOut,
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 1000,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(-0.0, -0.0),
-        scale: 0.1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'buttonOnPageLoadAnimation1': AnimationInfo(
-      curve: Curves.bounceOut,
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 1010,
-      delay: 450,
-      fadeIn: true,
-      initialState: AnimationState(
-        scale: 0.1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-    'buttonOnPageLoadAnimation2': AnimationInfo(
-      curve: Curves.bounceOut,
-      trigger: AnimationTrigger.onPageLoad,
-      duration: 1010,
-      delay: 450,
-      fadeIn: true,
-      initialState: AnimationState(
-        scale: 0.1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        scale: 1,
-        opacity: 1,
-      ),
-    ),
-  };
+class _SplashScreenWidgetState extends State<SplashScreenWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
-      this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,80 +40,74 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
           padding: EdgeInsetsDirectional.fromSTEB(25, 25, 25, 25),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 125, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/hook-dat-logo-red-hook-shadow.png',
-                          width: 325,
-                          height: 175,
-                          fit: BoxFit.cover,
-                        ).animated([animationsMap['imageOnPageLoadAnimation']]),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              AutoSizeText(
-                                'Louisiana\'s #1',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w800,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                              ),
-                              AutoSizeText(
-                                'Fishing Charter',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w800,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                              ),
-                              AutoSizeText(
-                                '& Guide Service!',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w800,
-                                      fontStyle: FontStyle.italic,
-                                    ),
-                              ),
-                            ],
-                          ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/hook-dat-logo-red-hook-shadow.png',
+                        width: 325,
+                        height: 175,
+                        fit: BoxFit.cover,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              'Louisiana\'s #1',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                            ),
+                            AutoSizeText(
+                              'Fishing Charter',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                            ),
+                            AutoSizeText(
+                              '& Guide Service!',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Open Sans',
+                                    color: FlutterFlowTheme.of(context)
+                                        .tertiaryColor,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 75, 0, 0),
@@ -205,9 +140,9 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: 12,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ).animated([animationsMap['buttonOnPageLoadAnimation1']]),
+                    ),
                   ],
                 ),
               ),
@@ -245,9 +180,9 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                           color: Colors.transparent,
                           width: 1,
                         ),
-                        borderRadius: 12,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ).animated([animationsMap['buttonOnPageLoadAnimation2']]),
+                    ),
                   ],
                 ),
               ),
@@ -257,14 +192,25 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Browse As Guest',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Open Sans',
-                            color: FlutterFlowTheme.of(context).tertiaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w300,
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NavBarPage(initialPage: 'ChartersPage'),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'Browse As Guest',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Open Sans',
+                              color: FlutterFlowTheme.of(context).tertiaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                            ),
+                      ),
                     ),
                   ],
                 ),
